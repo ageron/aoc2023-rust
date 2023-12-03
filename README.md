@@ -20,8 +20,6 @@ cd aoc2023-rust
 cargo run --release
 ```
 
-On my MacBook, this runs in about 1.7 seconds.
-
 You can specify days to run if you want, for example this will run days 2, 4, and 6:
 
 ```
