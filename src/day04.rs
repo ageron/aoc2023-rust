@@ -1,8 +1,4 @@
-fn parse_ints(s: &str) -> Vec<u32> {
-    s.split_whitespace()
-        .filter_map(|s| s.parse().ok())
-        .collect()
-}
+use crate::utils::parse_ints;
 
 fn n_matching(winning_numbers: &[u32], our_numbers: &[u32]) -> usize {
     winning_numbers
@@ -16,8 +12,8 @@ pub fn run(input: &str) {
         .lines()
         .map(|line| {
             let mut parts = line.split(": ").nth(1).unwrap().split(" | ");
-            let winning_numbers: Vec<u32> = parse_ints(parts.next().unwrap());
-            let our_numbers: Vec<u32> = parse_ints(parts.next().unwrap());
+            let winning_numbers: Vec<u32> = parse_ints(parts.next().unwrap(), false);
+            let our_numbers: Vec<u32> = parse_ints(parts.next().unwrap(), false);
             (winning_numbers, our_numbers)
         })
         .collect();
