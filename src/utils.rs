@@ -15,3 +15,11 @@ pub fn parse_int_vecs<T: Num + FromStr>(input: &str, signed: bool) -> Vec<Vec<T>
         .map(|line| parse_ints(line, signed))
         .collect_vec()
 }
+
+pub fn argmax<T: Ord>(array: &[T]) -> Option<usize> {
+    array
+        .iter()
+        .enumerate()
+        .max_by_key(|&(_, count)| count)
+        .map(|(index, _)| index)
+}
