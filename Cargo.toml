@@ -7,12 +7,12 @@ authors = ["Aurélien Geron <ageron@users.noreply.github.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-itertools = "0.10"
+itertools = "0.12"
 regex = "1.7"
 pathfinding = "4.0"
 num = "0.4"
 lazy_static = "1.4"
 serde = { version = "1.0", features = ["derive", "rc"] }
 serde_json = "1.0"
-hashbrown = "0.13"
+hashbrown = "0.14"
 rayon = "1.6"

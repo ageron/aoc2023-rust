@@ -1,5 +1,5 @@
 use itertools::Itertools;
-use num::Num;
+use num::{Integer, Num};
 use std::str::FromStr;
 
 pub fn parse_ints<T: Num + FromStr>(input: &str, signed: bool) -> Vec<T> {
@@ -22,4 +22,17 @@ pub fn argmax<T: Ord>(array: &[T]) -> Option<usize> {
         .enumerate()
         .max_by_key(|&(_, count)| count)
         .map(|(index, _)| index)
+}
+
+pub fn gcd<T: Integer + Copy>(mut a: T, mut b: T) -> T {
+    while b != T::zero() {
+        let t = b;
+        b = a % b;
+        a = t;
+    }
+    a
+}
+
+pub fn lcm<T: Integer + Copy>(a: T, b: T) -> T {
+    a / gcd(a, b) * b
 }
