@@ -1,9 +1,10 @@
-fn is_reflected(
+fn count_reflection_errors(
     grid: &[Vec<bool>],
     mirror_index: usize,
     is_horizontal: bool,
-    flipped_pos: (usize, usize),
-) -> bool {
+    max_errors: u32,
+) -> u32 {
+    let mut num_errors = 0;
     let (size_along_mirror, size_perpendicular) = if is_horizontal {
         (grid[0].len(), grid.len())
     } else {
@@ -17,49 +18,26 @@ fn is_reflected(
             } else {
                 ((mirror_index - j, i), (mirror_index + j + 1, i))
             };
-            if (grid[pos.1][pos.0] != grid[pos_reflected.1][pos_reflected.0]) ^ (pos == flipped_pos)
-            {
-                return false;
+            if grid[pos.1][pos.0] != grid[pos_reflected.1][pos_reflected.0] {
+                num_errors += 1;
+                if num_errors > max_errors {
+                    return num_errors;
+                }
             }
         }
     }
-    true
+    num_errors
 }
 
-fn find_reflection_id(
-    grid: &[Vec<bool>],
-    flipped_pos: (usize, usize),
-    ignored_reflection_id: usize,
-) -> usize {
-    let mut reflection_id = 0;
+fn find_reflection_id(grid: &[Vec<bool>], num_reflection_errors: u32) -> u32 {
     for (is_horizontal, multiplier, size_perpendicular) in
         [(false, 1, grid[0].len()), (true, 100, grid.len())]
     {
         for mirror_index in 0..size_perpendicular - 1 {
-            if is_reflected(grid, mirror_index, is_horizontal, flipped_pos) {
-                let new_reflection_id = (mirror_index + 1) * multiplier;
-                if ignored_reflection_id == 0 {
-                    return new_reflection_id;
-                }
-                if new_reflection_id != ignored_reflection_id {
-                    if reflection_id != 0 {
-                        return 0;
-                    }
-                    reflection_id = new_reflection_id;
-                }
-            }
-        }
-    }
-    reflection_id
-}
-
-fn smudge_reflection_id(grid: &[Vec<bool>], ignored_reflection_id: usize) -> usize {
-    for flipped_col in 0..grid[0].len() {
-        for flipped_row in 0..grid.len() {
-            let reflection_id =
-                find_reflection_id(grid, (flipped_col, flipped_row), ignored_reflection_id);
-            if reflection_id != 0 {
-                return reflection_id;
+            let num_errors =
+                count_reflection_errors(grid, mirror_index, is_horizontal, num_reflection_errors);
+            if num_errors == num_reflection_errors {
+                return (mirror_index as u32 + 1) * multiplier;
             }
         }
     }
@@ -76,17 +54,11 @@ pub fn run(input: &str) {
         })
         .collect();
 
-    let reflection_ids: Vec<_> = grids
-        .iter()
-        .map(|grid| find_reflection_id(grid, (grid[0].len(), 0), 0))
-        .collect();
-    let total_reflection_ids: usize = reflection_ids.iter().sum();
-    println!("{}", total_reflection_ids);
-
-    let total_smudge_reflection_ids: usize = grids
-        .iter()
-        .zip(reflection_ids.iter())
-        .map(|(grid, &ignored_reflection_id)| smudge_reflection_id(grid, ignored_reflection_id))
-        .sum();
-    println!("{}", total_smudge_reflection_ids);
+    for num_reflection_errors in [0, 1] {
+        let total_reflection_ids: u32 = grids
+            .iter()
+            .map(|grid| find_reflection_id(grid, num_reflection_errors))
+            .sum();
+        println!("{}", total_reflection_ids);
+    }
 }
