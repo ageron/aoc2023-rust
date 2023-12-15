@@ -1,5 +1,8 @@
 use itertools::Itertools;
 use num::{Integer, Num};
+
+use std::collections::hash_map::DefaultHasher;
+use std::hash::{Hash, Hasher};
 use std::str::FromStr;
 
 pub fn parse_ints<T: Num + FromStr>(input: &str, signed: bool) -> Vec<T> {
@@ -35,4 +38,10 @@ pub fn gcd<T: Integer + Copy>(mut a: T, mut b: T) -> T {
 
 pub fn lcm<T: Integer + Copy>(a: T, b: T) -> T {
     a / gcd(a, b) * b
+}
+
+pub fn compute_hash<T: Hash>(t: &T) -> u64 {
+    let mut s = DefaultHasher::new();
+    t.hash(&mut s);
+    s.finish()
 }

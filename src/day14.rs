@@ -1,5 +1,5 @@
-use std::collections::{hash_map::DefaultHasher, HashMap};
-use std::hash::{Hash, Hasher};
+use crate::utils::compute_hash;
+use std::collections::HashMap;
 
 fn tilt(platform: &mut Vec<Vec<u8>>, dx: i32, dy: i32) {
     let start_x: usize = if dx == -1 { 1 } else { 0 };
@@ -43,12 +43,6 @@ fn cycle(platform: &mut Vec<Vec<u8>>) {
     for (dx, dy) in [(0, -1), (-1, 0), (0, 1), (1, 0)] {
         tilt(platform, dx, dy);
     }
-}
-
-fn compute_hash<T: Hash>(t: &T) -> u64 {
-    let mut s = DefaultHasher::new();
-    t.hash(&mut s);
-    s.finish()
 }
 
 fn repeat_cycles(platform: &mut Vec<Vec<u8>>, num_cycles: u32) {

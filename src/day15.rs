@@ -30,18 +30,18 @@ fn apply_step(boxes: &mut [Vec<(String, u32)>], step: &str) {
 
 fn total_focusing_power(boxes: &[Vec<(String, u32)>]) -> u32 {
     boxes
-    .iter()
-    .enumerate()
-    .map(|(box_number, lenses)| {
-        lenses
-            .iter()
-            .enumerate()
-            .map(|(slot_number, &(_, focal_length))| {
-                focusing_power(box_number, slot_number, focal_length)
-            })
-            .sum::<u32>()
-    })
-    .sum()
+        .iter()
+        .enumerate()
+        .map(|(box_number, lenses)| {
+            lenses
+                .iter()
+                .enumerate()
+                .map(|(slot_number, &(_, focal_length))| {
+                    focusing_power(box_number, slot_number, focal_length)
+                })
+                .sum::<u32>()
+        })
+        .sum()
 }
 
 fn focusing_power(box_number: usize, slot_number: usize, focal_length: u32) -> u32 {
