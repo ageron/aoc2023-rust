@@ -53,12 +53,12 @@ pub fn run(input: &str) {
         .split(',')
         .map(|step| compute_elf_hash(step.as_bytes()))
         .sum();
-    println!("{:?}", sum_of_hashes);
+    println!("{}", sum_of_hashes);
 
     let mut boxes: Vec<Vec<(String, u32)>> = vec![vec![]; 256];
     input
         .split(',')
         .for_each(|step| apply_step(&mut boxes, step));
     let sum_of_focusing_powers: u32 = total_focusing_power(&boxes);
-    println!("{:?}", sum_of_focusing_powers);
+    println!("{}", sum_of_focusing_powers);
 }

@@ -92,7 +92,7 @@ pub fn run(input: &str) {
         .filter(|pn| pn.is_adjacent_to_any_symbol(&symbols))
         .map(|pn| pn.number)
         .sum();
-    println!("{:?}", sum_of_valid_part_numbers);
+    println!("{}", sum_of_valid_part_numbers);
 
     let sum_of_gear_ratios: i32 = symbols
         .iter()
