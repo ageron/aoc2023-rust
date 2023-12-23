@@ -1,4 +1,4 @@
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn get_start_position(pipes: &[&[u8]]) -> (i32, i32) {
     for (y, row) in pipes.iter().enumerate() {

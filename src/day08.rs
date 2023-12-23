@@ -1,5 +1,5 @@
 use crate::utils::lcm;
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn get_number_of_steps(
     start: &str,

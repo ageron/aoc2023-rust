@@ -1,4 +1,5 @@
-use std::collections::{HashMap, HashSet, VecDeque};
+use hashbrown::{HashMap, HashSet};
+use std::collections::VecDeque;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 enum Module {
@@ -119,5 +120,4 @@ pub fn run(input: &str) {
         .map(|&module_name| first_low_pulse.get(module_name).unwrap() + 1)
         .product();
     println!("{}", num_pushes_for_rx);
-    println!("{:?}", first_low_pulse);
 }

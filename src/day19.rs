@@ -1,5 +1,5 @@
 use crate::utils::parse_ints;
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 fn parse_part_rating(line: &str) -> [i32; 4] {
     let ratings = parse_ints(line, false);
